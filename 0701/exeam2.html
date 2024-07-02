@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 실습 3
+        function changeBgColor(newColor, delay){
+            return new Promise((resolve) => {
+                setTimeout(()=>{
+                    document.body.style.backgroundColor = newColor;
+                    resolve();
+                }, delay)
+            })
+        }
+        // then체이닝
+        // changeBgColor("red").then(()=>{
+        //     return changeBgColor('orange', 2000);
+        // }).then(()=>{
+        //     return changeBgColor('yellow', 2000);
+        // }).then(()=>{
+        //     return changeBgColor('green', 2000);
+        // }).then(()=>{
+        //     return changeBgColor('blue', 2000);
+        // }).then(()=>{
+        //     return changeBgColor('navy', 2000);
+        // }).then(()=>{
+        //     return changeBgColor('purple', 2000);
+        // });
+        async function exec(){
+            await changeBgColor("red", 1000);
+            await changeBgColor("orange", 1000);
+            await changeBgColor("yellow", 1000);
+            await changeBgColor("green", 1000);
+            await changeBgColor("blue", 1000);
+            await changeBgColor("navy", 1000);
+            await changeBgColor("purple", 1000);
+        }
+
+        exec();
+        
+        
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+npm uninstall axios  : axios package 지우기
+
+touch 파일명.확장자
+
+npm i  = 패키지 다운로드
+
+node index.js : 파일 실행

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function call(name){
+            return new Promise((resolve)=>{
+                setTimeout(()=>{
+                    console.log(name);
+                    resolve(name);
+                },1000)
+            })
+        }
+        function back(){
+            return new Promise((resolve)=>{
+                setTimeout(()=>{
+                    console.log('back');
+                    resolve('back');
+                },1000)
+            })
+        }
+        function hell(){
+            return new Promise((resolve)=>{
+                setTimeout(()=>{
+                    resolve('callback hell');
+                },1000)
+            })
+        }
+
+
+        // 실습 2
+        // async function exec(){
+        //     let user = await call('kim');
+        //     console.log(`${user} 님 환영합니다.`);
+        //     let a  = await back(user);
+        //     console.log(`${a} 을 실행했구나`);
+        //     let b = await hell(a);
+        //     console.log(`여기는 ${b}`);
+        // } 
+        // exec();
+
+        async function exec() {
+            const name = await call('kim');
+            console.log(`${name} 님 환영합니다.`);
+            const res = await back();
+            console.log(`${res}을 실행했구나.`);
+            const result = await hell();
+            console.log(`여기는 ${result}`);
+        }
+        exec();
+
+        // 실행
+        // call('kim').then((res)=>{
+        //     console.log(`${res} 반가워`);
+        //     return back();
+        // }).then((res1) =>{
+        //     console.log(`${res1}을 실행했구나`);
+        //     return hell();
+        // }).then((res2) =>{
+        //     console.log(`여기는 ${res2}`);
+        // });
+
+
+
+        function color(){
+            return new Promise 
+        }
+    </script>
+</body>
+</html>
