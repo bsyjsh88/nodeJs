@@ -1,7 +1,14 @@
 npm uninstall axios  : axios package 지우기
+npm install axios : axios package 가져오기
 
-touch 파일명.확장자
+touch 파일명.확장자 : 
 
 npm i  = 패키지 다운로드
 
+mkdir 파일명 : 폴더생성
+
 node index.js : 파일 실행
+
+"type" : "module"
+
+http://주소/shop.sjopbard?xcod=014&mcode=001
