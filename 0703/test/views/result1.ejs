@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h4><%= title  %></h4>
+    <fieldset>
+        <div>이름 : <span><%= userInfo.name %></span>님 환영합니다</div>
+        <div>성별 : <span><%= userInfo.gender %> </span></div>
+        <div>생년월일 : <span> <%= userInfo.year %>년</span> 
+                        <span> <%= userInfo.mon %>월</span>
+                        <span> <%= userInfo.day %>일</span></div>
+        <div>취미 : <span><%= userInfo.interest %></span></div>
+        <div>좋아하는 색 : <span><%= userInfo.color %></span></div>
+        <div>좋아하는 숫자 : <span><%= userInfo.number %></span></div>
+    </fieldset>
+    <div><a href="./form.ejs">홈</a></div>
+</body>
+</html>
