@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <form name="register-form">
+        <label for="name">이름</label>
+        <input type="text" id="name" required /><br />
+        <label for="email">이메일</label>
+        <input type="email" id="email" required /><br /><br />
+        <button type="button" onclick="ajaxGet()">ajax get 제출</button>
+        <button type="button" onclick="ajaxPost()">ajax post 제출</button>
+    </form>
+    <div class="result"></div>
+    <script>
+        const resultBox = document.querySelector('.result');
+        function ajaxGet(){
+            // 폼가져오기
+            const form = document.forms['register-form'];
+            // 백엔드로 보내는 데이터
+            const data = {
+                username: form.name.value,
+                email: form.email.value,
+            }
+            console.log(data);
+            // ajax
+            $.ajax({
+                type: "GET",
+                url: "/ajax",
+                data: data,
+                success: (res) => {
+                    console.log('res: ', res);
+                    resultBox.textContent = `${res.user} ${res.email} `;
+                }
+            });
+        }
+
+        function ajaxPost(){
+            const form = document.forms['register-form'];
+            if(form.name.value === ''){
+                alert('이름을 입력하세요');
+                return;
+            }
+            $.ajax({
+                type: "POST",
+                url: '/ajax',
+                data: {
+                    username: form.name.value,
+                    email: form.email.value,
+                },
+                success: (res) => {
+                    console.log('res: ', res);
+                    resultBox.textContent = `${res.user} ${res.email} `;
+                },
+            });
+        }
+    </script>
+</body>
+</html>

@@ -12,3 +12,7 @@ node index.js : 파일 실행
 "type" : "module"
 
 http://주소/shop.sjopbard?xcod=014&mcode=001
+
+
+npm init -y
+npm i express ejs multer@1.4.4
