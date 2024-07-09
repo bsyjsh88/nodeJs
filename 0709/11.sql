@@ -1,0 +1,4 @@
+-- select distinct department from employees;
+-- select sum(salary) as sum_salary from employees;
+-- select count(*) as count_employees from employees where department = 'IT개발팀';
+-- select department, avg(salary) as avg_salary from employees group by department having avg(salary) < 5000;
