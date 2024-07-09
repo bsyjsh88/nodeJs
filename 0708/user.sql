@@ -1,0 +1,12 @@
+-- select into user(username, age, address) values('성춘향', 23, '서울시 강남구');
+
+-- SELECT * FROM kdt13 user;
+-- select * from user where age < 25 And age >= 23;
+-- select * from user where username = '빵빵이';
+-- select * from user where age >= 23 order by username DESC;
+-- '%강남%' address에 '강남'이 들어가는 문자열을 검색
+-- select * from user where address like '%영등포%';
+-- select * from user where username like '__정';
+-- select * from user where username like '이__';
+-- select * from user where age between 23 and 25;
+-- select * from user where 
