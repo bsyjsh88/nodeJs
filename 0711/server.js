@@ -5,16 +5,14 @@ const PORT = 8000;
 app.set('view engine', 'ejs');
 app.use(express.json());
 
-const pageRouter = require('./routes/page');
-app.use('/', pageRouter);
-const visitorRouter = require('./routes/visitor');
-app.use('/api/visitor', visitorRouter);
+const loginRouter = require('./exam/routes/result');
+app.use('/api/login', loginRouter);
+
 
 // 404
 app.use('*', (req, res) => {
     res.status(404).render('404');
 });
-
-app.listen(PORT, () =>{
+app.listen(PORT, () => {
     console.log(`http://localhost:${PORT}`);
 });
