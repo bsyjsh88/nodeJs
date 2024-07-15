@@ -14,14 +14,18 @@ node index.js : 파일 실행
 http://주소/shop.sjopbard?xcod=014&mcode=001
 
 
-npm init -y
-npm i express ejs multer@1.4.4
-npm i mysql2
 
 npx sequelize init : 1번 실행
 
 npm init -y
-npm i express ejs dotenv mysql2
+npm i express ejs dotenv mysql2 sequelize sequelize-cli cross-env 
 mkdir views controller model routes
 touch server.js
 npm i sequelize sequelize-cli
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+HOST=localhost
+DBUSER=kdt13
+PASS=3390
+DATA=kdt13
