@@ -12,7 +12,8 @@ const pageRouter = require('./routes/page');
 app.use('/', pageRouter);
 const postRouter = require('./routes/post');
 app.use('/api/post', postRouter);
-
+const userRouter = require('./routes/user');
+app.use('/api/user', userRouter);
 
 // 404
 app.use('*', (req, res) => {

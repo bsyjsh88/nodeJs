@@ -1,5 +1,5 @@
 const express = require('express');
-const {main, post, detail, write, signup, login, profile} = require('../controller/page');
+const { main, post, detail, write, signup, login, profile } = require('../controller/page');
 const router = express.Router();
 
 router.get('/', main);

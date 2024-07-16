@@ -1,10 +1,10 @@
-const {DataTypes} = require('sequelize');
+const { DataTypes } = require('sequelize');
 
-const user = (seq) => {
-    return seq.define('user', {
+const member = (seq) => {
+    return seq.define('member', {
         id: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: false, //not null
             primaryKey: true,
             autoIncrement: true,
         },
@@ -12,15 +12,15 @@ const user = (seq) => {
             type: DataTypes.STRING(31),
             allowNull: false,
         },
+        pw: {
+            type: DataTypes.STRING(127),
+            allowNull: false,
+        },
         username: {
             type: DataTypes.STRING(31),
             allowNull: false,
         },
-        pw: {
-            type: DataTypes.STRING(127),
-            allowNull: false,
-        }
     });
-}
+};
 
-module.exports = user;
+module.exports = member;
