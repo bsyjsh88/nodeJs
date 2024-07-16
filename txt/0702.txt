@@ -23,6 +23,7 @@ mkdir views controller model routes
 touch server.js
 npm i sequelize sequelize-cli
 
+
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 HOST=localhost
