@@ -22,7 +22,9 @@ npm i express ejs dotenv mysql2 sequelize sequelize-cli cross-env
 mkdir views controller model routes
 touch server.js
 npm i sequelize sequelize-cli
+npm i cookie-parser jsonwebtoken
 
+npm i bcrypt
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 

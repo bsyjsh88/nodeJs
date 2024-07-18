@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.post('/signup', signup);
 router.post('/login', login);
-router.get('/info/:id', find );
+router.get('/info', find );
 router.patch('/update', update);
 router.delete('/delete', deleteFunc);
 

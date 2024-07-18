@@ -1,11 +1,11 @@
 const { Member, Profile } = require('../models');
-const member = require('../models/member');
+const jwt = require('jsonwebtoken');
 
-// 회원가입
+//회원가입
 exports.signup = async (req, res) => {
     try {
         const { userId, password, username, age, email } = req.body;
-        // 존재여부확인
+        //존재여부확인
         const find = await Member.findOne({ where: { userId } });
         console.log('find', find);
         if (find) {
@@ -13,7 +13,7 @@ exports.signup = async (req, res) => {
         } else {
             const result = await Member.create({ userId, password });
             console.log('signup', result);
-            await Profile.create({ username, age, email, memberId: result.userId });
+            await Profile.create({ username, age, email, memberId: result.id });
             res.json({ result: true });
         }
     } catch (error) {
@@ -21,16 +21,25 @@ exports.signup = async (req, res) => {
         res.status(500).json({ result: false, message: '서버오류' });
     }
 };
-// 로그인
+//로그인
 exports.login = async (req, res) => {
     try {
         const { userId, password } = req.body;
         const find = await Member.findOne({ where: { userId } });
         if (find) {
             if (find.password === password) {
+                //jwt토큰 발생
+                /*
+                expiresIn: 만료시간
+                algorithm: 서명 알고리즘 지정
+                issuer: 토큰발급자 지정
+                */
+                const token = jwt.sign({id: find.id, userId: find.userId}, process.env.SECRET, { expiresIn: '24h'} );
+                console.log(process.env.SECRET);
                 const response = {
-                    id: find.id,
-                    userid: find.userid,
+                    // id: find.id,
+                    // userId: find.userId,
+                    token,
                 };
                 res.json({ result: true, code: 100, response, message: '로그인 성공' });
             } else {
@@ -39,38 +48,38 @@ exports.login = async (req, res) => {
         } else {
             res.json({ result: false, code: 1001, response: null, message: '회원이 아닙니다.' });
         }
-    } catch {
+    } catch (error) {
         console.log(error);
         res.status(500).json({ result: false, message: '서버오류' });
     }
-
 };
-// 회원조회
+//회원조회
 exports.find = async (req, res) => {
     try {
-        const { id } = req.params;
+        const { id } = req.userInfo;
         const result = await Member.findByPk(id, {
-            attributes: ['userId'],
+            attributes: ['userId', 'password'],
             //include: 쿼리를 실행할때 관련된 모델의 데이터도 함께 조회할 수 있도록하는 옵션
             include: [{ model: Profile, attributes: ['username', 'age', 'email'] }],
         });
         console.log('find', result);
         res.json({ result: true, response: result });
-
-    } catch {
+    } catch (error) {
         console.log(error);
         res.status(500).json({ result: false, message: '서버오류' });
     }
 };
 exports.update = async (req, res) => {
     try {
-        const { password, username, age, email, id} = req.body;
-        const find = await Member.findByPk(id)
-        if(find) {
-            await Member.update({password},{where: {id}});
-            await Profile.update({username, age, email }, { where : {memberId: id}});
+        const { id } = req.userInfo;
+        const { password, username, age, email } = req.body;
+        const find = await Member.findByPk(id);
+        if (find) {
+            await Member.update({ password }, { where: { id } });
+            await Profile.update({ username, age, email }, { where: { memberId: id } });
+            res.json({ result: true });
         } else {
-            res.json({result: false, message: "회원이없슴" });
+            res.json({ result: false, message: '회원이없습니다.' });
         }
     } catch (error) {
         console.log(error);
@@ -78,13 +87,13 @@ exports.update = async (req, res) => {
     }
 };
 exports.deleteFunc = async (req, res) => {
-    try{
-        const { id } = req.body;
-        await Profile.destroy({ where: {memberId: id}});
-        await Member.destroy({ where: { id }});
-        res.json({result: true});
-    } catch (error){
+    try {
+        const { id } = req.userInfo;
+        await Profile.destroy({ where: { memberId: id } });
+        await Member.destroy({ where: { id } });
+        res.json({ result: true });
+    } catch (error) {
         console.log(error);
         res.status(500).json({ result: false, message: '서버오류' });
     }
-}
+};

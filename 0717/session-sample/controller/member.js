@@ -30,8 +30,10 @@ exports.login = async (req, res) => {
             if (find.password === password) {
                 const response = {
                     id: find.id,
-                    userid: find.userid,
+                    userId: find.userId,
                 };
+                //세션 생성
+                req.session.user = response;
                 res.json({ result: true, code: 100, response, message: '로그인 성공' });
             } else {
                 res.json({ result: false, code: 1000, response: null, message: '비밀번호 틀렸습니다.' });
@@ -48,7 +50,9 @@ exports.login = async (req, res) => {
 // 회원조회
 exports.find = async (req, res) => {
     try {
-        const { id } = req.params;
+        // const { id } = req.params;
+        const { id } = req.session.user;
+        console.log(req.session.user);
         const result = await Member.findByPk(id, {
             attributes: ['userId'],
             //include: 쿼리를 실행할때 관련된 모델의 데이터도 함께 조회할 수 있도록하는 옵션
@@ -57,29 +61,32 @@ exports.find = async (req, res) => {
         console.log('find', result);
         res.json({ result: true, response: result });
 
-    } catch {
+    } catch(error) {
         console.log(error);
         res.status(500).json({ result: false, message: '서버오류' });
     }
 };
 exports.update = async (req, res) => {
-    try {
-        const { password, username, age, email, id} = req.body;
-        const find = await Member.findByPk(id)
-        if(find) {
-            await Member.update({password},{where: {id}});
-            await Profile.update({username, age, email }, { where : {memberId: id}});
-        } else {
-            res.json({result: false, message: "회원이없슴" });
+        try {
+            const { password, username, age, email} = req.body;
+            const { id } = req.session.user; //세션사용
+            const find = await Member.findByPk(id);
+            if (find) {
+                await Member.update({ password }, { where: { id } });
+                await Profile.update({ username, age, email }, { where: { memberId: id } })
+                res.json({ result: true });
+            } else {
+                res.json({ reuslt: false, message: "회원이 없습니다." });
+            }
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ result: false, message: '서버오류' });
         }
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ result: false, message: '서버오류' });
     }
-};
 exports.deleteFunc = async (req, res) => {
     try{
-        const { id } = req.body;
+        // const { id } = req.body;
+        const { id } = req.session.user; //세션사용
         await Profile.destroy({ where: {memberId: id}});
         await Member.destroy({ where: { id }});
         res.json({result: true});

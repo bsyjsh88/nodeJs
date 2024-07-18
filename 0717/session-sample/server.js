@@ -1,20 +1,22 @@
 const express = require('express');
 const db = require('./models');
+const session = require('express-session');
 const app = express();
 const PORT = 8000;
 
 
 app.use(express.json());
+//세션설정
+app.use(session({
+    secret: process.env.SESSION,
+    resave: false,
+    saveUninitialized: true,
+}));
+
 
 // 라우터
 const memberRouter = require('./routes/member');
 app.use('/api/member', memberRouter);
-
-const postRouter = require('./routes/post');
-app.use('/api/post', postRouter );
-
-const studentRouter = require('./routes/student');
-app.use('/api/student', studentRouter );
 
 // 404
 app.use("*", (req, res) => {
